@@ -1,0 +1,63 @@
+processing .\img_135abfea-c6ff-482c-bbbe-f23a084ea32d.png... ok
+processing .\img_2dddccdd-2fc0-42f4-ab42-9555ae6454bc.png... ok
+processing .\img_40eeade2-e964-4cd2-8afb-961f1bb0c331.png... ok
+processing .\img_7f9e192c-dabb-4945-9b22-f5443a327c7f.png... ok
+processing .\img_e4d27c44-1529-4a7d-a85d-809373a8357a.png... ok
+
+RMS: 2.9308686005919244
+camera matrix:
+ [[1.23053729e+04 0.00000000e+00 8.51504146e+02]
+ [0.00000000e+00 1.16884141e+04 5.77611871e+02]
+ [0.00000000e+00 0.00000000e+00 1.00000000e+00]]
+distortion coefficients:  [-2.60495951e+01  1.56979399e+03 -4.33580206e-01  2.65150238e-02
+  1.16483951e+04]
+  
+  
+processing .\img_324f3e23-9f1b-421c-a3d3-65710e7c0fdf.png... ok
+processing .\img_500262a8-1f89-485b-bd8f-d41430914d31.png... chessboard not found
+processing .\img_50c5c8f9-1f56-44bb-bde5-285e2112088a.png... ok
+processing .\img_634ae840-8455-4e57-bab5-496fa0a6c355.png... ok
+processing .\img_83c29874-5ba5-4191-91d1-786e65369c1f.png... ok
+processing .\img_89684a70-51e0-4d35-91dc-16395e4edca8.png... ok
+processing .\img_959320ba-c262-499d-b24a-c73019dcd133.png... chessboard not found
+processing .\img_9abbe654-7315-4df0-8347-c4dd68ef6270.png... ok
+processing .\img_c0289aff-5f1d-4a72-89e4-61ef7298d8c2.png... chessboard not found
+processing .\img_c7bab1d3-832c-4198-943b-30c1c353280b.png... ok
+processing .\img_f5489a0a-a519-4b8e-882e-afd79fb1bcbc.png... ok
+processing .\img_f9a3a7e1-374d-4292-8ba7-fe04d2c9c3f5.png... ok
+
+RMS: 2.5833954576325016
+camera matrix:
+ [[7.66979367e+03 0.00000000e+00 8.54811536e+02]
+ [0.00000000e+00 7.39743954e+03 5.03659908e+02]
+ [0.00000000e+00 0.00000000e+00 1.00000000e+00]]
+distortion coefficients:  [-1.27715232e+01  3.83818781e+02 -1.21807629e-01 -2.05657902e-02
+ -6.57719107e+03]
+ 
+ 
+ processing .\img_135abfea-c6ff-482c-bbbe-f23a084ea32d.png... ok
+processing .\img_2dddccdd-2fc0-42f4-ab42-9555ae6454bc.png... ok
+processing .\img_324f3e23-9f1b-421c-a3d3-65710e7c0fdf.png... ok
+processing .\img_40eeade2-e964-4cd2-8afb-961f1bb0c331.png... ok
+processing .\img_500262a8-1f89-485b-bd8f-d41430914d31.png... chessboard not found
+processing .\img_50c5c8f9-1f56-44bb-bde5-285e2112088a.png... ok
+processing .\img_634ae840-8455-4e57-bab5-496fa0a6c355.png... ok
+processing .\img_67ff7eca-b2d8-4f75-8265-d62dba6c84e2.png... ok
+processing .\img_7f9e192c-dabb-4945-9b22-f5443a327c7f.png... ok
+processing .\img_83c29874-5ba5-4191-91d1-786e65369c1f.png... ok
+processing .\img_89684a70-51e0-4d35-91dc-16395e4edca8.png... ok
+processing .\img_959320ba-c262-499d-b24a-c73019dcd133.png... chessboard not found
+processing .\img_9abbe654-7315-4df0-8347-c4dd68ef6270.png... ok
+processing .\img_c0289aff-5f1d-4a72-89e4-61ef7298d8c2.png... chessboard not found
+processing .\img_c7bab1d3-832c-4198-943b-30c1c353280b.png... ok
+processing .\img_e4d27c44-1529-4a7d-a85d-809373a8357a.png... ok
+processing .\img_f5489a0a-a519-4b8e-882e-afd79fb1bcbc.png... ok
+processing .\img_f9a3a7e1-374d-4292-8ba7-fe04d2c9c3f5.png... ok
+
+RMS: 2.6967738361501112
+camera matrix:
+ [[9.19377115e+03 0.00000000e+00 8.45716058e+02]
+ [0.00000000e+00 9.86542071e+03 5.66083591e+02]
+ [0.00000000e+00 0.00000000e+00 1.00000000e+00]]
+distortion coefficients:  [-1.73942236e+01  6.06457359e+02 -2.43299457e-01  3.36809040e-02
+ -1.69849843e+04]
