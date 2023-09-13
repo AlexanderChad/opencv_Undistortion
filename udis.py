@@ -2,48 +2,37 @@ from __future__ import print_function
 import numpy as np
 import cv2
 import glob
-from matplotlib import pyplot as plt
-import os
 
 img_names_undistort = [img for img in glob.glob(
-    "./*.png")]
+    "./img_test/*.png")]
 new_path = "./undist/"
 
-camera_matrix = np.array([[9.19377115e+03, 0.00000000e+00, 8.45716058e+02],
-                          [0.00000000e+00, 9.86542071e+03, 5.66083591e+02],
-                          [0.00000000e+00, 0.00000000e+00, 1.00000000e+00]])
-dist_coefs = np.array([-1.73942236e+01,  6.06457359e+02, -2.43299457e-01,  3.36809040e-02,
-                       -1.69849843e+04])
+camera_matrix = np.array([[484.70471536,   0.        , 538.38023713],
+       [  0.        , 482.98833345, 544.09372506],
+       [  0.        ,   0.        ,   1.        ]])
+dist_coefs = np. array([ 0.31932615, -0.0646646 , -0.00164196, -0.00349879, -0.04961284])
 
-i = 0
 
-# for img_found in img_names_undistort:
-while i < len(img_names_undistort):
-    img = cv2.imread(img_names_undistort[i])
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+for i, img_path in enumerate(img_names_undistort):
+    img = cv2.imread(img_path)
 
     h,  w = img.shape[:2]
     newcameramtx, roi = cv2.getOptimalNewCameraMatrix(
         camera_matrix, dist_coefs, (w, h), 1, (w, h))
 
-    # dst = cv2.undistort(img, camera_matrix, dist_coefs, None, newcameramtx)
-
-    # dst = cv2.cvtColor(dst, cv2.COLOR_BGR2RGB)
-
     # undistort
-    mapx, mapy = cv2.initUndistortRectifyMap(
-        camera_matrix, dist_coefs, None, newcameramtx, (w, h), 5)
-    dst = cv2.remap(img, mapx, mapy, cv2.INTER_LINEAR)
+    dst = cv2.undistort(img, camera_matrix, dist_coefs, None, newcameramtx)
+
+    # get filename
+    name = '.'.join(img_path.split("\\")[-1].split('.')[:-1])
+
+    undst = cv2.cvtColor(dst, cv2.COLOR_BGR2RGB)
 
     # crop and save the image
     x, y, w, h = roi
+    cv2.imwrite(new_path + name + '_undist_0.png', dst)
     dst = dst[y:y+h, x:x+w]
-
-    name = img_names_undistort[i].split("\\")
-    name = name[-1]
-    full_name = new_path + name + '_undist.png'
+    cv2.imwrite(new_path + name + '_undist_1.png', dst)
 
     # outfile = img_names_undistort + '_undistorte.png'
-    print('Undistorted image written to: %s' % full_name)
-    cv2.imwrite(full_name, dst)
-    i = i + 1
+    print(f'Undistorted image: {img_path},\tProgress: {round((i+1)/len(img_names_undistort)*100,2)}%')

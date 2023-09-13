@@ -1,63 +1,60 @@
-from __future__ import print_function
 import numpy as np
 import cv2
-import os
+from glob import glob
 
 if __name__ == '__main__':
-    import sys
-    import getopt
-    from glob import glob
+    chessboardSize = (12, 7)
 
-    args, img_mask = getopt.getopt(sys.argv[1:], '', ['debug=', 'square_size='])
-    args = dict(args)
-    args.setdefault('--debug', './')
-    args.setdefault('--square_size', 1.0)
-    if not img_mask:
-        img_mask = './*.png'
-    else:
-        img_mask = img_mask[0]
+    # termination criteria
+    criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
-    img_names = glob(img_mask)
-    debug_dir = args.get('--debug')
-    if not os.path.isdir(debug_dir):
-        os.mkdir(debug_dir)
-    square_size = float(args.get('--square_size'))
+    # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
+    objp = np.zeros((chessboardSize[0] * chessboardSize[1], 3), np.float32)
+    objp[:, :2] = np.mgrid[0:chessboardSize[0],
+                           0:chessboardSize[1]].T.reshape(-1, 2)
 
-    pattern_size = (9, 6)
-    pattern_points = np.zeros((np.prod(pattern_size), 3), np.float32)
-    pattern_points[:, :2] = np.indices(pattern_size).T.reshape(-1, 2)
-    pattern_points *= square_size
+    img_names = glob('.\\img_set\\*.png')
 
-    obj_points = []
-    img_points = []
+    # Arrays to store object points and image points from all the images.
+    objpoints = []  # 3d point in real world space
+    imgpoints = []  # 2d points in image plane.
+
     h, w = 0, 0
     img_names_undistort = []
-    for fn in img_names:
-        print('processing %s... ' % fn, end='')
-        img = cv2.imread(fn, 0)
+    for i, image in enumerate(img_names):
+        print(
+            f'processing {round(i/len(img_names)*100,2)}%, image: {image}... ', end='')
+        img = cv2.imread(image)
         if img is None:
-            print("Failed to load", fn)
+            print("Failed to load ", image)
             continue
+        h,  w = img.shape[:2]
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        # Find the chess board corners
+        ret, corners = cv2.findChessboardCorners(gray, chessboardSize, None)
+        # If found, add object points, image points (after refining them)
+        if ret == True:
+            objpoints.append(objp)
+            corners2 = cv2.cornerSubPix(
+                gray, corners, (11, 11), (-1, -1), criteria)
+            imgpoints.append(corners)
 
-        h, w = img.shape[:2]
-        found, corners = cv2.findChessboardCorners(img, pattern_size)
-        if found:
-            term = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_COUNT, 30, 0.1)
-            cv2.cornerSubPix(img, corners, (5, 5), (-1, -1), term)
+            # get filename
+            name = '.'.join(image.split("\\")[-1].split('.')[:-1])
 
-        if not found:
-            print('chessboard not found')
-            continue
+            # Draw and display the corners
+            cv2.drawChessboardCorners(img, chessboardSize, corners2, ret)
+            cv2.imwrite('.\\ChessboardCorners\\' + name + '_ChessboardCorners.png', img)
+            print('ok')
+        else:
+            print('ignore')
+    print('processing 100%')
 
-        img_points.append(corners.reshape(-1, 2))
-        obj_points.append(pattern_points)
+    rms, camera_matrix, dist_coefs, rvecs, tvecs = cv2.calibrateCamera(
+        objpoints, imgpoints, (w, h), None, None)
 
-        print('ok')
-
-    rms, camera_matrix, dist_coefs, rvecs, tvecs = cv2.calibrateCamera(obj_points, img_points, (w, h), None, None)
-
-    print("\nRMS:", rms)
-    print("camera matrix:\n", camera_matrix)
-    print("distortion coefficients: ", dist_coefs.ravel())
+    print(f"\nRMS: {rms}\n")
+    print("camera_matrix = np." + repr(camera_matrix))
+    print("dist_coefs = np.", repr(dist_coefs.ravel()))
 
     cv2.destroyAllWindows()
